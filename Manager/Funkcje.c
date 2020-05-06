@@ -12,14 +12,12 @@ nazwyPlikow* zaladujNazwyPlikowDoListy(nazwyPlikow** pHead) {
 	if (!pHead) {
 		pHead = (nazwyPlikow*)malloc(sizeof(nazwyPlikow));
 		return pHead;
-		printf("chuj");
 	}
 	else {
 		nazwyPlikow* current = pHead;
 		while (current->next != NULL)
 		current = current->next;
 		current->next = (nazwyPlikow*)malloc(sizeof(nazwyPlikow));
-		printf("cipa");
 		return current->next;
 	}
 }
