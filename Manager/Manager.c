@@ -9,7 +9,7 @@
 
 int main() {
 	nazwyPlikow* pHead = NULL;
-    pobierzNazwyPlikow(pHead);
+    pobierzNazwyPlikow(&pHead);
     pokaz(pHead);
 	system("pause");
 	return 0;

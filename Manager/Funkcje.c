@@ -8,17 +8,12 @@
 #include "Struktury.h"
 
 
-nazwyPlikow* zaladujNazwyPlikowDoListy(nazwyPlikow** pHead) {
-	if (!pHead) {
-		pHead = (nazwyPlikow*)malloc(sizeof(nazwyPlikow));
-		return pHead;
-	}
-	else {
-		nazwyPlikow* current = pHead;
-		while (current->next != NULL)
-		current = current->next;
-		current->next = (nazwyPlikow*)malloc(sizeof(nazwyPlikow));
-		return current->next;
+void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead,char* buf) {
+	if (*pHead) {
+		nazwyPlikow* current = malloc(sizeof(nazwyPlikow));
+		current->tab = buf;
+		current->next = (*pHead);
+		*pHead = current;
 	}
 }
 
@@ -30,9 +25,7 @@ void pobierzNazwyPlikow(nazwyPlikow** pHead) {
 		while (!feof(plik)) {
 			fgets(buf, size, plik);
 			//printf("%s\n", buf);
-			nazwyPlikow* wezel = zaladujNazwyPlikowDoListy(pHead);
-			wezel->tab = buf;
-			wezel->next = NULL;
+			zaladujNazwyPlikowDoListy(&pHead,buf);			
 		}
 		fclose(plik);
 	}

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 
-nazwyPlikow* zaladujNazwyPlikowDoListy(nazwyPlikow** pHead);
+nazwyPlikow* zaladujNazwyPlikowDoListy(nazwyPlikow** pHead,char* buf);
 
 
 void pobierzNazwyPlikow(nazwyPlikow** pHead);

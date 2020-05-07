@@ -1,4 +1,4 @@
-﻿  Manager.c
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Manager.c(12,29): warning C4047: "funkcja": "nazwyPlikow **" różni się w poziomach operatorów pośrednich od "nazwyPlikow *"
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Manager.c(12,29): warning C4024: "pobierzNazwyPlikow": różne typy dla formalnego i rzeczywistego parametru 1
+﻿  Funkcje.c
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(28,36): warning C4047: "funkcja": "nazwyPlikow **" różni się w poziomach operatorów pośrednich od "nazwyPlikow ***"
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(28,36): warning C4024: "zaladujNazwyPlikowDoListy": różne typy dla formalnego i rzeczywistego parametru 1
   Manager.vcxproj -> C:\Users\Adam\Desktop\Projekt\Manager\Debug\Manager.exe
