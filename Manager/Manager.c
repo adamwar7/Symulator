@@ -8,9 +8,10 @@
 
 
 int main() {
-	nazwyPlikow* pHead = NULL;
+	nazwyPlikow** pHead = NULL;
     pobierzNazwyPlikow(&pHead);
     pokaz(pHead);
+	
 	system("pause");
 	return 0;
 }

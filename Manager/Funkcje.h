@@ -12,3 +12,5 @@ void pobierzNazwyPlikow(nazwyPlikow** pHead);
 
 
 void pokaz(nazwyPlikow* head);
+
+void usunNazwyPlikowDoListy(nazwyPlikow** pHead);

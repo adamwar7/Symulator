@@ -3,44 +3,59 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
-#include <curses.h>
 #include "Struktury.h"
 
-void zaladujNazwyPlikowDoListy(nazwyPlikow **pHead, char *buf)
+void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead, char* buf)
 {
-	nazwyPlikow *current = malloc(sizeof(nazwyPlikow));
+	nazwyPlikow* current = malloc(sizeof(nazwyPlikow));
 	current->tab = buf;
 	current->next = (*pHead);
 	*pHead = current;
 }
 
-void pobierzNazwyPlikow(nazwyPlikow **pHead)
+void pobierzNazwyPlikow(nazwyPlikow** pHead)
 {
-	FILE *plik = fopen("NazwyPilkow.txt", "r");
+	FILE* plik = fopen("NazwyPilkow.txt", "r");
 	if (plik)
 	{
-		const int size = 20;
-		char buf[20] = {0};
-		while (!feof(plik))
-		{
-			fgets(buf, size, plik);
-			printf("%p, %p\n", pHead, *pHead);
-			//printf("%s\n", buf);
-			zaladujNazwyPlikowDoListy(pHead, buf);
+		int sizeofpliks = 12;
+		for (int i = 0; i < sizeofpliks; i++) {
+			char* i = malloc(10 * sizeof(i));
+			if (!feof(plik)) {
+
+
+				fscanf(plik, "%s", i);
+				//printf("%p, %p\n", pHead, *pHead);
+				//printf("%s\n", i);
+				zaladujNazwyPlikowDoListy(pHead, i);
+			}
 		}
 		fclose(plik);
 	}
 }
 
-void pokaz(nazwyPlikow *l)
+void pokaz(nazwyPlikow* l)
 {
 	if (l != NULL)
 	{
-		printf("%s ", l->tab);
+		printf("%s\n", l->tab);
 		pokaz(l->next);
 	}
 	else
 	{
-		printf("pHead jest NULLEM :(\n");
+		return;
 	}
+}
+
+
+void usunNazwyPlikowDoListy(nazwyPlikow** pHead)
+{
+	nazwyPlikow* tmp = NULL;
+
+	while (*pHead != NULL) {
+		tmp = (*pHead)->next;
+		free(*pHead);
+		*pHead = tmp;
+	}
+
 }
