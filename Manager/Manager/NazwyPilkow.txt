@@ -1,0 +1,12 @@
+Real.txt
+Barcelona.txt
+Liverpool.txt
+Milan.txt
+Inter.txt
+Atlethico.txt
+Juventus.txt
+Chelsea.txt
+Manchester.txt
+Ajax.txt
+Sevilla.txt
+Psg.txt
