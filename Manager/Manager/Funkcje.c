@@ -165,6 +165,114 @@ void wypiszZawodnikow(zawodnicy* rynekHead, zawodnicy* zawHead, twojZespol* twoj
 
 	}
 }
+
+void zwolnijTabele(kluby** tabela) {
+	kluby* tmp = NULL;
+	while (*tabela != NULL) {
+		tmp = (*tabela)->next;
+		free(*tabela);
+		*tabela = tmp;
+	}
+}
+void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
+	system("cls");
+	kluby* current = glowa;
+	kluby* nowy = NULL;
+	while (current->next != glowa) {
+			kluby* help = malloc(sizeof(kluby));
+			kluby* tmp = nowy;
+			help->nazwa = current->nazwa;
+			help->trener = current->trener;
+			help->budzet = current->budzet;
+			help->pkt = current->pkt;
+			help->iloscMeczy = current->iloscMeczy;
+			help->bilans = current->bilans;
+			help->goleZ = current->goleS;
+			help->goleS = current->goleS;
+			help->zawHead = NULL;
+			if (nowy == NULL) {
+				help->next = NULL;
+				nowy = help;
+			}
+			else {
+				if(current->pkt>nowy->pkt){
+					help->next = nowy;
+					nowy = help;
+				}
+				else {
+					while ((tmp->next != NULL) && !(current->pkt > tmp->next->pkt && current->pkt <= tmp->pkt))
+						tmp = tmp->next;
+						if (tmp->next == NULL) {
+							help->next = NULL;
+							tmp->next = help;
+						}
+						else {
+							help->next = tmp->next;
+							tmp->next = help;
+						}
+				}
+			}
+			current = current->next;
+	}
+	kluby* help = malloc(sizeof(kluby));
+	kluby* tmp = nowy;
+	help->nazwa = current->nazwa;
+	help->trener = current->trener;
+	help->budzet = current->budzet;
+	help->pkt = current->pkt;
+	help->iloscMeczy = current->iloscMeczy;
+	help->bilans = current->bilans;
+	help->goleZ = current->goleS;
+	help->goleS = current->goleS;
+	help->zawHead = NULL;
+	if (nowy == NULL) {
+		help->next = NULL;
+		nowy = help;
+	}
+	else {
+		if (current->pkt > nowy->pkt) {
+			help->next = nowy;
+			nowy = help;
+		}
+		else {
+			while ((tmp->next != NULL) && !(current->pkt > tmp->next->pkt&& current->pkt <= tmp->pkt))
+				tmp = tmp->next;
+			if (tmp->next == NULL) {
+				help->next = NULL;
+				tmp->next = help;
+			}
+			else {
+				help->next = tmp->next;
+				tmp->next = help;
+			}
+		}
+	}
+	kluby* tmp2 = nowy;
+	int i = 1;
+	printf("                      Schedule\n");
+	printf("-----------------------------------------------------\n");
+	printf("Place      Team    G   Pts  Bil  Gsc  Gls\n");
+	printf("-----------------------------------------------------\n");
+	while (tmp2) {
+		printf("%3d. %10s  %3d  %3d  %3d  %3d  %3d\n", i, tmp2->nazwa,tmp2->iloscMeczy,tmp2->pkt,tmp2->bilans,tmp2->goleZ,tmp2->goleS);
+		tmp2 = tmp2->next;
+		i++;
+	}
+	tmp2 = nowy;
+		zwolnijTabele(&nowy);
+		printf("\nBack [1]\n");
+		char liczba = '0';
+		printf("Enter number below\n");
+		printf("------------------\n");
+		while (liczba != '1') {
+			if (scanf("%c", &liczba));
+		}
+		if(liczba=='1'){
+			team(rynekHead, twojHead, glowa, stanSezonu);
+		}
+		
+}
+
 void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
 	if (glowa) {
 		system("cls");
@@ -209,16 +317,19 @@ void aktualizujZespol(twojZespol* twojHead, kluby* glowa) {
 		if (glowa) {
 			if ((stricmp(twojHead->nazwa, tmp->nazwa)) == 0) {
 				aktualizuj(twojHead, tmp);
+				return;
 			}
 			else {
 				while (tmp->next != glowa) {
 					if ((stricmp(twojHead->nazwa, tmp->next->nazwa)) == 0) {
 						aktualizuj(twojHead, tmp->next);
+						return;
 					}
 					tmp = tmp->next;
 				}
 			}
 		}
+		aktualizuj(twojHead, tmp);
 		return;
 	}
 }
@@ -382,9 +493,15 @@ void sSezonu(int stanSezonu,zawodnicy*rynekHead,twojZespol*twojHead,kluby*glowa)
 			current->budzet = 0;
 			current = current->next;
 		}
+		current->pkt = 0;
+		current->goleZ = 0;
+		current->goleS = 0;
+		current->bilans = 0;
+		current->iloscMeczy = 0;
+		current->budzet = 0;
 	}
 	stanSezonu = 0;
-	zapiszTabele(glowa);
+	//zapiszTabele(glowa);
 	system("cls");
 	printf("The season is over, see results in a text file\n\n\n");
 	printf("Start new season [1]\n");
@@ -415,7 +532,7 @@ void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezo
 	char liczba = '0';
 	printf("Enter number below\n");
 	printf("------------------\n");
-	while (liczba != '1' && liczba != '2' && liczba != 3) {
+	while (liczba != '1' && liczba != '2' && liczba != '3') {
 		if (scanf("%c", &liczba));
 	}
 	switch (liczba) {
@@ -426,7 +543,7 @@ void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezo
 		wypiszZawodnikow(rynekHead, twojHead->zawHead, twojHead, glowa,stanSezonu);
 		break;
 	case '3':
-		//liga(glowa);
+		wypiszTabele(rynekHead,twojHead,glowa,stanSezonu);
 		break;
 	}
 

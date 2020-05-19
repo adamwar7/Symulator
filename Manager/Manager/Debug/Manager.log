@@ -1,15 +1,16 @@
 ﻿  Funkcje.c
 C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(163,46): warning C4020: "team": zbyt wiele parametrów rzeczywistych
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(210,16): warning C4013: niezdefiniowany "stricmp"; przy założeniu, że extern zwraca int
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(363,29): warning C4133: "=": niezgodne typy - od "char [12]" do "FILE *"
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(363,29): warning C4133: "funkcja": niezgodne typy - od "FILE *" do "const char *"
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(400,46): warning C4020: "menu": zbyt wiele parametrów rzeczywistych
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(407,85): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(423,45): warning C4020: "menu": zbyt wiele parametrów rzeczywistych
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(435,85): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(448,50): warning C4020: "rozgrywka": zbyt wiele parametrów rzeczywistych
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(454,52): warning C4020: "wypiszRynek": zbyt wiele parametrów rzeczywistych
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(460,89): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(565,19): warning C4047: "=": "kluby **" różni się w poziomach operatorów pośrednich od "kluby *"
-C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(604,91): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(271,47): warning C4020: "team": zbyt wiele parametrów rzeczywistych
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(318,16): warning C4013: niezdefiniowany "stricmp"; przy założeniu, że extern zwraca int
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(474,29): warning C4133: "=": niezgodne typy - od "char [12]" do "FILE *"
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(474,29): warning C4133: "funkcja": niezgodne typy - od "FILE *" do "const char *"
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(517,46): warning C4020: "menu": zbyt wiele parametrów rzeczywistych
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(524,85): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(540,45): warning C4020: "menu": zbyt wiele parametrów rzeczywistych
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(552,85): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(565,50): warning C4020: "rozgrywka": zbyt wiele parametrów rzeczywistych
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(571,52): warning C4020: "wypiszRynek": zbyt wiele parametrów rzeczywistych
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(577,89): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(682,19): warning C4047: "=": "kluby **" różni się w poziomach operatorów pośrednich od "kluby *"
+C:\Users\Adam\Desktop\Projekt\Manager\Manager\Funkcje.c(721,91): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
   Manager.vcxproj -> C:\Users\Adam\Desktop\Projekt\Manager\Debug\Manager.exe
