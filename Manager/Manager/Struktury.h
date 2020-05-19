@@ -24,7 +24,21 @@ typedef struct kluby {
 	int budzet;
 	int goleZ;
 	int goleS;
+	int bilans;
 	int pkt;
+	int iloscMeczy;
 	struct kluby* next;
 	struct zawodnicy* zawHead;
 }kluby;
+
+typedef struct twojZespol {
+	char* nazwa;
+	char* trener;
+	int budzet;
+	int goleZ;
+	int goleS;
+	int bilans;
+	int pkt;
+	int iloscMeczy;
+	struct zawodnicy* zawHead;
+}twojZespol;

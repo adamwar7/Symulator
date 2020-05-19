@@ -3,18 +3,30 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 #include "Struktury.h"
 #include "Funkcje.h"
 
 
 int main() {
 	nazwyPlikow* pHead = NULL;
-    pobierzNazwyPlikow(&pHead);
-    pokaz(pHead);
 	kluby* glowa = NULL;
+	zawodnicy* rynek = NULL;
+	int stanSezonu = 0;
+	pobierzRynek(&rynek);
+	pobierzNazwyPlikow(&pHead);
 	pobierzKluby(&glowa, pHead);
-	wypiszKlub(glowa);
-
+	start(glowa);
+	twojZespol* twojHead = zapiszSwojZespol(wybierzZespol(glowa));
+	menu(rynek,twojHead,glowa,stanSezonu);
+	//wypiszSwojZespol(twojHead);
+	//wypiszKlub(glowa);
+	//symulujKolejke(glowa);
+	//CyklicznaNaJednokierunkowa(&glowa);
+	//posortuj(&glowa);
+	//JednokierunkowaNaCykliczna(&glowa);
+	//menu();
+	//wypiszKlub(glowa);
 	system("pause");
 	return 0;
 }

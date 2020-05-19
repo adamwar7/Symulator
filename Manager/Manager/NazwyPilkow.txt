@@ -10,3 +10,7 @@ Manchester.txt
 Ajax.txt
 Sevilla.txt
 Psg.txt
+Zabrze.txt
+Bayern.txt
+Moskwa.txt
+Arsenal.txt
