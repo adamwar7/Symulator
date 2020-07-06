@@ -18,16 +18,11 @@ int main() {
 	pobierzKluby(&glowa, pHead);
 	start(glowa);
 	twojZespol* twojHead = zapiszSwojZespol(wybierzZespol(glowa));
+	usunNazwyPlikowDoListy(&pHead);
 	menu(rynek,twojHead,glowa,stanSezonu);
-	//wypiszSwojZespol(twojHead);
-	//wypiszKlub(glowa);
-	//symulujKolejke(glowa);
-	//CyklicznaNaJednokierunkowa(&glowa);
-	//posortuj(&glowa);
-	//JednokierunkowaNaCykliczna(&glowa);
-	//menu();
-	//wypiszKlub(glowa);
-	system("pause");
+	//usunListeZawodnikow(&rynek);
+	usunTwojZespol(&twojHead);
+//	usunKluby(&glowa);
 	return 0;
 }
 

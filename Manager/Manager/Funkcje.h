@@ -5,17 +5,29 @@
 #include <stdlib.h>
 
 
-void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead,char* buf);
+void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead, char* buf);
 
 void pobierzNazwyPlikow(nazwyPlikow** pHead);
 
 void usunNazwyPlikowDoListy(nazwyPlikow** pHead);
 
+void zaladujRezerwowych(zawodnicy** rynekHead, char* i, int a, int b);
+
+void pobierzRynek(zawodnicy** rynekHead);
+
 void pobierzKluby(kluby** glowa, nazwyPlikow* pHead);
 
-void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void wypiszZawodnikow(zawodnicy* rynekHead, zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-void wypiszZawodnikow(zawodnicy* rynekHead, zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa);
+void zwolnijTabele(kluby** tabela);
+
+void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
+
+void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
+
+void aktualizuj(twojZespol* twojHead, kluby* glowa);
+
+void aktualizujZespol(twojZespol* twojHead, kluby* glowa);
 
 int sumujMoce(zawodnicy* zawHead);
 
@@ -25,34 +37,34 @@ void symulujMecz(kluby* glowa, kluby* drugaGlowa);
 
 void symulujKolejke(kluby* glowa);
 
-void symulujSezon(kluby* glowa);
+void symulujSezon(kluby* glowa, kluby* end);
 
-void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void sSezonu(int stanSezonu, zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
 
-void menu(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-kluby* wybierzZespol(kluby* glowa);
+void menu(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
 twojZespol* zapiszSwojZespol(kluby* glowa);
 
+kluby* wybierzZespol(kluby* glowa);
+
 void start();
 
-void swap(kluby* glowa, kluby* secondGlowa);
+void swap(kluby** glowa, kluby** secondGlowa);
 
-kluby* posortuj(kluby** glowa);
+void posortuj(kluby** glowa);
 
-void CyklicznaNaJednokierunkowa(kluby** pHead);
+void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-void JednokierunkowaNaCykliczna(kluby** glowa);
+void wypiszRynek(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-void pobierzRynek(zawodnicy** rynekHead);
+void rules(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu);
 
-void zaladujRezerwowych(zawodnicy** rynekHead, char* i, int a, int b);
+void usunListeZawodnikow(zawodnicy* rynekHead);
 
-void wypiszRynek(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa);
+void usunKluby(kluby* glowa);
 
-
-//Ma dodawaæ zawodnika do twojego zespolu i do glowniej listy zespolow oraz usuwac zawodnika z listy rynku;
-void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void usunTwojZespol(twojZespol** twojHead);

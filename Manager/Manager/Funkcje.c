@@ -9,16 +9,40 @@
 #include "Struktury.h"
 
 
-void wypiszRynek(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa);
+void wypiszRynek(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
-void menu(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void menu(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
-void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
-void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
+void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
-void kup(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa);
+void kup(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
+void rules(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
+
+void usunListeZawodnikow(zawodnicy* rynekHead) {
+	zawodnicy* tmp = NULL;
+	while(rynekHead->pNext != NULL) {
+		tmp = rynekHead->pNext;
+		free(rynekHead);
+		rynekHead = tmp;
+	}
+}
+void usunKluby(kluby* glowa) {
+	zawodnicy* tmp = NULL;
+	while (glowa->next != NULL) {
+		tmp = glowa->next;
+		usunListeZawodnikow(glowa->zawHead);
+		free(glowa);
+		glowa = tmp;
+	}
+}
+
+void usunTwojZespol(twojZespol** twojHead) {
+	usunListeZawodnikow((*twojHead)->zawHead);
+	free(*twojHead);
+}
 
 void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead, char* buf)
 {
@@ -160,7 +184,7 @@ void wypiszZawodnikow(zawodnicy* rynekHead, zawodnicy* zawHead, twojZespol* twoj
 	while (i != '1') {
 		if (scanf("%c", &i));
 		if (i == '1') {
-			team(rynekHead, twojHead, glowa,stanSezonu);
+			team(rynekHead, twojHead, glowa, stanSezonu);
 		}
 
 	}
@@ -174,45 +198,46 @@ void zwolnijTabele(kluby** tabela) {
 		*tabela = tmp;
 	}
 }
+
 void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
 	system("cls");
 	kluby* current = glowa;
 	kluby* nowy = NULL;
 	while (current->next != glowa) {
-			kluby* help = malloc(sizeof(kluby));
-			kluby* tmp = nowy;
-			help->nazwa = current->nazwa;
-			help->trener = current->trener;
-			help->budzet = current->budzet;
-			help->pkt = current->pkt;
-			help->iloscMeczy = current->iloscMeczy;
-			help->bilans = current->bilans;
-			help->goleZ = current->goleS;
-			help->goleS = current->goleS;
-			help->zawHead = NULL;
-			if (nowy == NULL) {
-				help->next = NULL;
+		kluby* help = malloc(sizeof(kluby));
+		kluby* tmp = nowy;
+		help->nazwa = current->nazwa;
+		help->trener = current->trener;
+		help->budzet = current->budzet;
+		help->pkt = current->pkt;
+		help->iloscMeczy = current->iloscMeczy;
+		help->bilans = current->bilans;
+		help->goleZ = current->goleS;
+		help->goleS = current->goleS;
+		help->zawHead = NULL;
+		if (nowy == NULL) {
+			help->next = NULL;
+			nowy = help;
+		}
+		else {
+			if (current->pkt > nowy->pkt) {
+				help->next = nowy;
 				nowy = help;
 			}
 			else {
-				if(current->pkt>nowy->pkt){
-					help->next = nowy;
-					nowy = help;
+				while ((tmp->next != NULL) && !(current->pkt > tmp->next->pkt&& current->pkt <= tmp->pkt))
+					tmp = tmp->next;
+				if (tmp->next == NULL) {
+					help->next = NULL;
+					tmp->next = help;
 				}
 				else {
-					while ((tmp->next != NULL) && !(current->pkt > tmp->next->pkt && current->pkt <= tmp->pkt))
-						tmp = tmp->next;
-						if (tmp->next == NULL) {
-							help->next = NULL;
-							tmp->next = help;
-						}
-						else {
-							help->next = tmp->next;
-							tmp->next = help;
-						}
+					help->next = tmp->next;
+					tmp->next = help;
 				}
 			}
-			current = current->next;
+		}
+		current = current->next;
 	}
 	kluby* help = malloc(sizeof(kluby));
 	kluby* tmp = nowy;
@@ -254,23 +279,23 @@ void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int 
 	printf("Place      Team    G   Pts  Bil  Gsc  Gls\n");
 	printf("-----------------------------------------------------\n");
 	while (tmp2) {
-		printf("%3d. %10s  %3d  %3d  %3d  %3d  %3d\n", i, tmp2->nazwa,tmp2->iloscMeczy,tmp2->pkt,tmp2->bilans,tmp2->goleZ,tmp2->goleS);
+		printf("%3d. %10s  %3d  %3d  %3d  %3d  %3d\n", i, tmp2->nazwa, tmp2->iloscMeczy, tmp2->pkt, tmp2->bilans, tmp2->goleZ, tmp2->goleS);
 		tmp2 = tmp2->next;
 		i++;
 	}
 	tmp2 = nowy;
-		zwolnijTabele(&nowy);
-		printf("\nBack [1]\n");
-		char liczba = '0';
-		printf("Enter number below\n");
-		printf("------------------\n");
-		while (liczba != '1') {
-			if (scanf("%c", &liczba));
-		}
-		if(liczba=='1'){
-			team(rynekHead, twojHead, glowa, stanSezonu);
-		}
-		
+	zwolnijTabele(&nowy);
+	printf("\nBack [1]\n");
+	char liczba = '0';
+	printf("Enter number below\n");
+	printf("------------------\n");
+	while (liczba != '1') {
+		if (scanf("%c", &liczba));
+	}
+	if (liczba == '1') {
+		team(rynekHead, twojHead, glowa, stanSezonu);
+	}
+
 }
 
 void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
@@ -283,7 +308,7 @@ void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int st
 		printf("%d\n", glowa->goleZ);
 		printf("%d\n", glowa->goleS);
 		printf("Ilosc meczy:  %d\n", glowa->iloscMeczy);
-		wypiszZawodnikow(rynekHead, glowa->zawHead, twojHead, glowa,stanSezonu);
+		wypiszZawodnikow(rynekHead, glowa->zawHead, twojHead, glowa, stanSezonu);
 		kluby* current = glowa;
 		while (current->next != glowa) {
 			printf("%s\n", current->next->nazwa);
@@ -293,7 +318,7 @@ void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int st
 			printf("%d\n", current->next->goleZ);
 			printf("%d\n", current->next->goleS);
 			printf("Ilosc meczy:  %d\n", current->iloscMeczy);
-			wypiszZawodnikow(rynekHead, current->next->zawHead, twojHead, glowa,stanSezonu);
+			wypiszZawodnikow(rynekHead, current->next->zawHead, twojHead, glowa, stanSezonu);
 			current = current->next;
 		}
 	}
@@ -432,17 +457,17 @@ void symulujMecz(kluby* glowa, kluby* drugaGlowa) {
 	drugaGlowa->bilans += ODJ(goleB, goleA);
 	if (goleA > goleB) {
 		glowa->pkt += 3;
-		glowa->budzet += 1500;
+		glowa->budzet += 5000;
 	}
 	else if (goleA == goleB) {
 		glowa->pkt += 1;
-		glowa->budzet += 500;
+		glowa->budzet += 2500;
 		drugaGlowa->pkt += 1;
-		drugaGlowa->budzet += 500;
+		drugaGlowa->budzet += 2500;
 	}
 	else {
 		drugaGlowa->pkt += 3;
-		drugaGlowa->budzet += 1500;
+		drugaGlowa->budzet += 5000;
 	}
 	glowa->iloscMeczy += 1;
 	drugaGlowa->iloscMeczy += 1;
@@ -460,28 +485,15 @@ void symulujKolejke(kluby* glowa) {
 	symulujMecz(tmp, tmp->next);
 }
 
-symulujSezon(kluby* glowa,kluby*end){
+void symulujSezon(kluby* glowa, kluby* end) {
 	kluby* current = glowa;
-	while (current->next != glowa && current->next!=end){
+	while (current->next != glowa && current->next != end) {
 		symulujKolejke(current);
 		current = current->next;
 	}
 }
 
-void zapiszTabele(kluby* glowa) {
-	kluby*current = glowa;
-	FILE* plik;
-	if(fopen(plik="Results.txt", "w"));
-	int i = 1;
-	if (plik) {
-		for (i; i < 17; i++) {
-			fprintf(plik, "%d. %s\n", i, current->nazwa);
-			current = current->next;
-		}
-		fclose(plik);
-	}
-}
-void sSezonu(int stanSezonu,zawodnicy*rynekHead,twojZespol*twojHead,kluby*glowa) {
+void sSezonu(int stanSezonu, zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa) {
 	if (stanSezonu == 15) {
 		kluby* current = glowa;
 		while (current->next != glowa) {
@@ -490,7 +502,6 @@ void sSezonu(int stanSezonu,zawodnicy*rynekHead,twojZespol*twojHead,kluby*glowa)
 			current->goleS = 0;
 			current->bilans = 0;
 			current->iloscMeczy = 0;
-			current->budzet = 0;
 			current = current->next;
 		}
 		current->pkt = 0;
@@ -498,12 +509,10 @@ void sSezonu(int stanSezonu,zawodnicy*rynekHead,twojZespol*twojHead,kluby*glowa)
 		current->goleS = 0;
 		current->bilans = 0;
 		current->iloscMeczy = 0;
-		current->budzet = 0;
 	}
 	stanSezonu = 0;
-	//zapiszTabele(glowa);
 	system("cls");
-	printf("The season is over, see results in a text file\n\n\n");
+	printf("The season is over, progress in league is being reset\n\n\n");
 	printf("Start new season [1]\n");
 	printf("Exit [2]\n\n");
 	char liczba = '0';
@@ -517,7 +526,6 @@ void sSezonu(int stanSezonu,zawodnicy*rynekHead,twojZespol*twojHead,kluby*glowa)
 		menu(rynekHead, twojHead, glowa, stanSezonu);
 		break;
 	case '2':
-		exit(0);
 		break;
 	}
 }
@@ -537,13 +545,13 @@ void team(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezo
 	}
 	switch (liczba) {
 	case '1':
-		menu(rynekHead, twojHead, glowa,stanSezonu);
+		menu(rynekHead, twojHead, glowa, stanSezonu);
 		break;
 	case '2':
-		wypiszZawodnikow(rynekHead, twojHead->zawHead, twojHead, glowa,stanSezonu);
+		wypiszZawodnikow(rynekHead, twojHead->zawHead, twojHead, glowa, stanSezonu);
 		break;
 	case '3':
-		wypiszTabele(rynekHead,twojHead,glowa,stanSezonu);
+		wypiszTabele(rynekHead, twojHead, glowa, stanSezonu);
 		break;
 	}
 
@@ -553,28 +561,36 @@ void menu(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezo
 	system("cls");
 	printf("Continue [1]\n");
 	printf("Team [2]\n");
-	printf("Transfers [3]\n\n");
+	printf("Transfers [3]\n");
+	printf("Rules [4]\n");
+	printf("Exit [5]\n\n");
 	char liczba = '0';
 	printf("Enter number below\n");
 	printf("------------------\n");
-	while (liczba != '1' && liczba != '2' && liczba != '3') {
+	while (liczba != '1' && liczba != '2' && liczba != '3'
+		&& liczba != '4' && liczba != '5') {
 		if (scanf("%c", &liczba));
 	}
 	switch (liczba) {
 	case '1':
-		rozgrywka(rynekHead, twojHead, glowa,stanSezonu);
+		rozgrywka(rynekHead, twojHead, glowa, stanSezonu);
 		break;
 	case '2':
-		team(rynekHead, twojHead, glowa,stanSezonu);
+		team(rynekHead, twojHead, glowa, stanSezonu);
 		break;
 	case '3':
-		wypiszRynek(rynekHead, twojHead, glowa,stanSezonu);
+		wypiszRynek(rynekHead, twojHead, glowa, stanSezonu);
+		break;
+	case '4':
+		rules(rynekHead, twojHead, glowa, stanSezonu);
+		break;
+	case '5':
 		break;
 	}
 }
 
 
-void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa,int stanSezonu) {
+void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
 	system("cls");
 	printf("Simulate a match [1]\n");
 	printf("Simulate entire season [2]\n");
@@ -592,9 +608,9 @@ void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa,int stan
 		current = current->next;
 		aktualizujZespol(twojHead, current);
 		stanSezonu++;
-		if(stanSezonu==15)
-		sSezonu(stanSezonu, rynekHead, twojHead, glowa);
-		rozgrywka(rynekHead, twojHead, current,stanSezonu);
+		if (stanSezonu == 15)
+			sSezonu(stanSezonu, rynekHead, twojHead, glowa);
+		rozgrywka(rynekHead, twojHead, current, stanSezonu);
 		break;
 	case '2':
 		symulujSezon(current, glowa);
@@ -605,7 +621,7 @@ void rozgrywka(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa,int stan
 			sSezonu(stanSezonu, rynekHead, twojHead, glowa);
 		break;
 	case '3':
-		menu(rynekHead, twojHead, current,stanSezonu);
+		menu(rynekHead, twojHead, current, stanSezonu);
 		break;
 	}
 }
@@ -672,7 +688,8 @@ void start() {
 	case '1':
 		return;
 	case '2':
-exit(0);
+		exit(0);
+		break;
 	}
 }
 
@@ -683,25 +700,25 @@ void swap(kluby** glowa, kluby** secondGlowa) {
 
 }
 
-void CyklicznaNaJednokierunkowa(kluby** pHead) {
-	if (*pHead) {
-		kluby* current = *pHead;
-		while (current->next != *pHead) {
-			current = current->next;
-		}
-		current->next = NULL;
-	}
-}
-
-void JednokierunkowaNaCykliczna(kluby** glowa) {
-	if (*glowa) {
-		kluby* current = *glowa;
-		while (current->next != NULL) {
-			current = current->next;
-		}
-		current->next = *glowa;
-	}
-}
+//void CyklicznaNaJednokierunkowa(kluby** pHead) {
+//	if (*pHead) {
+//		kluby* current = *pHead;
+//		while (current->next != *pHead) {
+//			current = current->next;
+//		}
+//		current->next = NULL;
+//	}
+//}
+//
+//void JednokierunkowaNaCykliczna(kluby** glowa) {
+//	if (*glowa) {
+//		kluby* current = *glowa;
+//		while (current->next != NULL) {
+//			current = current->next;
+//		}
+//		current->next = *glowa;
+//	}
+//}
 
 
 void posortuj(kluby** glowa) {
@@ -718,7 +735,71 @@ void posortuj(kluby** glowa) {
 	}
 }
 
-void wypiszRynek(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa,int stanSezonu) {
+void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
+	system("cls");
+	printf("enter player name below or '1' to back\n---------------------------\n");
+	
+	char tab[20] = { '0' };
+	while (TRUE) {
+		if (scanf("%s", &tab));
+		if (tab[0]=='1')
+			goto x;
+		if (rynekHead) {
+			zawodnicy* tmp = rynekHead;
+			kluby* tym = glowa;
+			if ((stricmp(tab, tmp->nazwisko)) == 0) {
+				int size = 0;
+				zawodnicy* p = tmp->pNext;
+				while (twojHead->nazwa != tym->nazwa) {
+					tym = tym->next;
+				}
+				while (tym->zawHead->pNext != NULL) {
+					size++;
+					tym->zawHead = tym->zawHead->pNext;
+				}
+				if ((tmp->wartosc <= twojHead->budzet) && (size<21)) {
+					twojHead->budzet -= tmp->wartosc;
+					tym->budzet -= tmp->wartosc;
+					tym->zawHead->pNext = tmp;
+					rynekHead = p;
+					tym->zawHead->pNext->pNext = NULL;
+				}
+				goto x;
+			}
+			else {
+				while (tmp->pNext != NULL) {
+					zawodnicy* p = tmp;
+					zawodnicy* temp =tmp->pNext;
+					if ((stricmp(tab, temp->nazwisko)) == 0) {
+						int size = 0;
+						while (twojHead->nazwa != tym->nazwa) {
+							tym = tym->next;
+						}
+						while (tym->zawHead->pNext != NULL) {
+							tym->zawHead = tym->zawHead->pNext;
+							size++;
+						}
+						if ((temp->wartosc <= twojHead->budzet) && (size<21)) {
+							twojHead->budzet -= temp->wartosc;
+							tym->budzet -= tmp->wartosc;
+							tym->zawHead->pNext = temp;
+							if (temp->pNext != NULL)
+								p->pNext = temp->pNext;
+							tym->zawHead->pNext->pNext = NULL;
+						}
+						goto x;
+					}
+					tmp = tmp->pNext;
+				}
+				if (tmp->pNext == NULL)
+					printf("Wrong name!\n");
+			}
+		}
+	}
+x: menu(rynekHead, twojHead, glowa, stanSezonu);
+}
+
+void wypiszRynek(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
 	system("cls");
 	printf("                  available players :\n------------------------------------------------------------------\n");
 	char* nazwisko = "name";
@@ -735,51 +816,38 @@ void wypiszRynek(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa,int st
 		printf("%10d\n", help->wartosc);
 		help = help->pNext;
 	}
-	printf("\n\nBuy [1]\nSell [2]\nBack [3]\n\nEnter number below:\n------------------\n");
+	printf("\nYours budget: %d\n\n", twojHead->budzet);
+	printf("\n\nBuy [1]\nBack [2]\n\nEnter number below:\n------------------\n");
 	char i = '0';
-	while (i != '1' && i != '2' && i != '3') {
+	while (i != '1' && i != '2') {
 		if (scanf("%c", &i));
 		switch (i) {
 		case '1':
-	//kup(rynekHead, twojHead, glowa);
+			kup(rynekHead, twojHead, glowa,stanSezonu);
 			break;
 		case '2':
-			break;
-		case '3':
-			menu(rynekHead, twojHead, glowa,stanSezonu);
+			menu(rynekHead, twojHead, glowa, stanSezonu);
 			break;
 		}
 	}
 }
-//void dodajDoListy(zawodnicy** zawHead,zawodnicy* element) {
-//	zawodnicy* nowy = malloc(sizeof(zawodnicy));
-//	nowy->nazwisko = element->nazwisko;
-//	nowy->moc = element->moc;
-//	nowy->wartosc = element->wartosc;
-//	nowy->pNext = (*zawHead);
-//	*zawHead = nowy;
-//}
-//void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa) {
-//	system("cls");
-//	char tab[20] = { '0' };
-//	char liczba = '0';
-//	printf("Back [1]\n\nEnter number or choosen name below\n---------------------------------\n");
-//	while (TRUE) {
-//		if (scanf("%s", &tab));
-//		zawodnicy* tmp = twojHead;
-//		if (stricmp(tab, tmp->nazwisko) == 0 && tmp->pNext == NULL) {
-//			dodajDoListy(&twojHead->zawHead, tmp);
-//			kluby* help = glowa;
-//			while (stricmp(twojHead->nazwa, help->nazwa)!=0){
-//				help = help->next;
-//			}
-//			dodajDoListy(&help->zawHead, tmp);
-//			free(tmp);
-//		}
-//
-//		if (liczba == '1') {
-//			wypiszRynek(rynekHead, twojHead, glowa);
-//			break;
-//		}
-//	}
-//}
+
+void rules(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
+	system("cls");
+	printf("Rules:\n----------------------------------------------\n");
+	printf("1. You can buy a player from market only if you have enough budget\n");
+	printf("2. After simulation you can see results by checking league\n");
+	printf("3. After simulation you will recive +5000 money if you win or +2500 if you draw\n   If you will symulate entire season you will recive money for everymatch\n");
+	printf("4. If season ends, progress in league is being reset\n");
+	printf("5. Have fun :)\n\n\n");
+	printf("Enter '1' below to back to main menu\n----------------------------------------------\n");
+	char i = '0';
+	while (i != '1') {
+		if (scanf("%c", &i));
+		if (i == '1') {
+			menu(rynekHead, twojHead, glowa, stanSezonu);
+			break;
+		}
+	}
+}
+
