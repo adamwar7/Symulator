@@ -35,9 +35,9 @@ int losujGole(int min, int max);
 
 void symulujMecz(kluby* glowa, kluby* drugaGlowa);
 
-void symulujKolejke(kluby* glowa);
+void symulujKolejke(kluby* glowa,int stanSezonu);
 
-void symulujSezon(kluby* glowa, kluby* end);
+void symulujSezon(kluby* glowa, kluby* end, int stanSezonu);
 
 void sSezonu(int stanSezonu, zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa);
 
