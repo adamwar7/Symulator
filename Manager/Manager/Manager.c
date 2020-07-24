@@ -16,13 +16,12 @@ int main() {
 	pobierzRynek(&rynek);
 	pobierzNazwyPlikow(&pHead);
 	pobierzKluby(&glowa, pHead);
-	start(glowa);
 	twojZespol* twojHead = zapiszSwojZespol(wybierzZespol(glowa));
-	usunNazwyPlikowDoListy(&pHead);
 	menu(rynek,twojHead,glowa,stanSezonu);
-	//usunListeZawodnikow(&rynek);
+	usunRynek(&rynek);
 	usunTwojZespol(&twojHead);
-//	usunKluby(&glowa);
+	usunNazwyPlikowDoListy(&pHead);
+	usunKluby(&glowa);
 	return 0;
 }
 

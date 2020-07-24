@@ -21,28 +21,58 @@ void kup(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
 void rules(zawodnicy* zawHead, twojZespol* twojHead, kluby* glowa, int sSezonu);
 
-void usunListeZawodnikow(zawodnicy* rynekHead) {
-	zawodnicy* tmp = NULL;
-	while(rynekHead->pNext != NULL) {
-		tmp = rynekHead->pNext;
-		free(rynekHead);
-		rynekHead = tmp;
+
+
+void clear(zawodnicy* first)
+{
+	zawodnicy* current = first;
+	zawodnicy* next = NULL;
+
+	while (current!=NULL && current->pNext != NULL)
+	{
+		next = current;
+		current = current->pNext;
+		free(next);
+		
 	}
 }
-void usunKluby(kluby* glowa) {
+void usunKluby(kluby** glowa) {
 	kluby* tmp = NULL;
-	while (glowa->next != NULL) {
-		tmp = glowa->next;
-		usunListeZawodnikow(glowa->zawHead);
-		free(glowa);
-		glowa = tmp;
+	kluby* poczatek = (*glowa);
+		while((*glowa)->next!=NULL){
+	tmp =(*glowa)->next;
+		(*glowa)->next = tmp->next;
+		free(tmp);
+		zawodnicy* current = NULL;
+		zawodnicy* abc = (*glowa)->zawHead;
+		while  (abc->pNext != NULL) {
+		current = abc;
+			abc = abc->pNext;
+			free(current);
+		}
+		if ((*glowa)->next == poczatek) {
+			(*glowa) = NULL;
+			free(poczatek);
+			break;
+		}
+		(*glowa) = (*glowa)->next;
+	}
+}
+
+usunRynek(zawodnicy** rynekHead) {
+	zawodnicy* current = NULL;
+	while ((*rynekHead)->pNext != NULL) {
+		current = (*rynekHead);
+		(*rynekHead) = (*rynekHead)->pNext;
+		free(current);
 	}
 }
 
 void usunTwojZespol(twojZespol** twojHead) {
-	usunListeZawodnikow((*twojHead)->zawHead);
+	clear((*twojHead)->zawHead);
 	free(*twojHead);
 }
+
 
 void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead, char* buf)
 {
@@ -215,7 +245,7 @@ void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int 
 		help->pkt = current->pkt;
 		help->iloscMeczy = current->iloscMeczy;
 		help->bilans = current->bilans;
-		help->goleZ = current->goleS;
+		help->goleZ = current->goleZ;
 		help->goleS = current->goleS;
 		help->zawHead = NULL;
 		if (nowy == NULL) {
@@ -303,34 +333,7 @@ void wypiszTabele(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int 
 y:;
 }
 
-void wypiszKlub(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
-	if (glowa) {
-		system("cls");
-		printf("%s\n", glowa->nazwa);
-		printf("%s\n", glowa->trener);
-		printf("%d\n", glowa->budzet);
-		printf("%d\n", glowa->pkt);
-		printf("%d\n", glowa->goleZ);
-		printf("%d\n", glowa->goleS);
-		printf("Ilosc meczy:  %d\n", glowa->iloscMeczy);
-		wypiszZawodnikow(rynekHead, glowa->zawHead, twojHead, glowa, stanSezonu);
-		kluby* current = glowa;
-		while (current->next != glowa) {
-			printf("%s\n", current->next->nazwa);
-			printf("%s\n", current->next->trener);
-			printf("%d\n", current->next->budzet);
-			printf("%d\n", current->next->pkt);
-			printf("%d\n", current->next->goleZ);
-			printf("%d\n", current->next->goleS);
-			printf("Ilosc meczy:  %d\n", current->iloscMeczy);
-			wypiszZawodnikow(rynekHead, current->next->zawHead, twojHead, glowa, stanSezonu);
-			current = current->next;
-		}
-	}
-	else {
-		return;
-	}
-}
+
 void aktualizuj(twojZespol* twojHead, kluby* glowa) {
 	twojHead->nazwa = glowa->nazwa;
 	twojHead->trener = glowa->trener;
@@ -462,17 +465,17 @@ void symulujMecz(kluby* glowa, kluby* drugaGlowa) {
 	drugaGlowa->bilans += ODJ(goleB, goleA);
 	if (goleA > goleB) {
 		glowa->pkt += 3;
-		glowa->budzet += 150000;
+		glowa->budzet += 125000;
 	}
 	else if (goleA == goleB) {
 		glowa->pkt += 1;
-		glowa->budzet += 75000;
+		glowa->budzet += 65000;
 		drugaGlowa->pkt += 1;
-		drugaGlowa->budzet += 75000;
+		drugaGlowa->budzet += 65000;
 	}
 	else {
 		drugaGlowa->pkt += 3;
-		drugaGlowa->budzet += 150000;
+		drugaGlowa->budzet += 125000;
 	}
 	glowa->iloscMeczy += 1;
 	drugaGlowa->iloscMeczy += 1;
@@ -667,6 +670,19 @@ twojZespol* zapiszSwojZespol(kluby* glowa) {
 }
 
 kluby* wybierzZespol(kluby* glowa) {
+	printf("Welome in game 'Football Mangarer' created by Adam Warzecha\n");
+	printf("Start [1]\n");
+	char liczba = '0';
+	printf("Enter number below\n");
+	printf("------------------\n");
+	while (liczba != '1') {
+		if (scanf("%c", &liczba));
+	}
+	switch (liczba) {
+	case '1':
+		goto x;
+	}
+	x:
 	system("cls");
 	printf("Select your team from the list below:\n");
 	if (glowa) {
@@ -693,69 +709,6 @@ kluby* wybierzZespol(kluby* glowa) {
 					}
 					tmp = tmp->next;
 				}
-			}
-		}
-	}
-}
-
-
-
-void start() {
-	printf("Welome in game 'Football Mangarer' created by Adam Warzecha\n");
-	printf("Start [1]\n");
-	printf("Exit [2]\n");
-	char liczba = '0';
-	printf("Enter number below\n");
-	printf("------------------\n");
-	while (liczba != '1' && liczba != '2') {
-		if (scanf("%c", &liczba));
-	}
-	switch (liczba) {
-	case '1':
-		return;
-	case '2':
-		exit(0);
-		break;
-	}
-}
-
-void swap(kluby** glowa, kluby** secondGlowa) {
-	kluby* tmp = *glowa;
-	glowa = secondGlowa;
-	secondGlowa = tmp;
-
-}
-
-//void CyklicznaNaJednokierunkowa(kluby** pHead) {
-//	if (*pHead) {
-//		kluby* current = *pHead;
-//		while (current->next != *pHead) {
-//			current = current->next;
-//		}
-//		current->next = NULL;
-//	}
-//}
-//
-//void JednokierunkowaNaCykliczna(kluby** glowa) {
-//	if (*glowa) {
-//		kluby* current = *glowa;
-//		while (current->next != NULL) {
-//			current = current->next;
-//		}
-//		current->next = *glowa;
-//	}
-//}
-
-
-void posortuj(kluby** glowa) {
-	if (*glowa) {
-		for (int i = 0; i < 15; i++) {
-			kluby* current = *glowa;
-			while (current->next != NULL) {
-				if (current->pkt < current->next->pkt) {
-					swap(&current, &current->next);
-				}
-				current = current->next;
 			}
 		}
 	}
@@ -854,7 +807,9 @@ void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezon
 			}
 		}
 	}
-x: menu(rynekHead, twojHead, glowa, stanSezonu);
+	if (tab[0] == '1') {
+	x: wypiszRynek(rynekHead, twojHead, glowa, stanSezonu);
+	}
 }
 
 void wypiszRynek(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezonu) {
@@ -895,7 +850,7 @@ void rules(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSez
 	printf("Rules:\n----------------------------------------------\n");
 	printf("1. You can buy a player from market only if you have enough budget\n");
 	printf("2. After simulation you can see results by checking league\n");
-	printf("3. After simulation you will recive +10000 money if you win or +5000 if you draw\n   If you will symulate entire season you will recive money for everymatch\n");
+	printf("3. After simulation you will recive +125000 money if you win or +65000 if you draw\n   If you will symulate entire season you will recive money for everymatch\n");
 	printf("4. If season ends, progress in league is being reset\n");
 	printf("5. Have fun :)\n\n\n");
 	printf("Enter '1' below to back to main menu\n----------------------------------------------\n");
