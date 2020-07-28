@@ -1,5 +1,0 @@
-﻿  Funkcje.c
-C:\Users\Adam\Desktop\adam\Symulator\Manager\Manager\Funkcje.c(351,16): warning C4013: niezdefiniowany "stricmp"; przy założeniu, że extern zwraca int
-  Manager.c
-  Generowanie kodu...
-  Manager.vcxproj -> C:\Users\Adam\Desktop\adam\Symulator\Manager\Debug\Manager.exe

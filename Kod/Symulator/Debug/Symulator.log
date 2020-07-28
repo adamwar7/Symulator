@@ -1,0 +1,9 @@
+﻿  FunkcjeInterfejsu.c
+C:\Users\Adam\Desktop\Ostateczny projekt\Symulator\Kod\Symulator\FunkcjeInterfejsu.c(277,16): warning C4013: niezdefiniowany "stricmp"; przy założeniu, że extern zwraca int
+  main.c
+  Pobieranie.c
+  Symulacja.c
+C:\Users\Adam\Desktop\Ostateczny projekt\Symulator\Kod\Symulator\Symulacja.c(27,16): warning C4013: niezdefiniowany "stricmp"; przy założeniu, że extern zwraca int
+  ZwalnianiePamieci.c
+  Generowanie kodu...
+  Symulator.vcxproj -> C:\Users\Adam\Desktop\Ostateczny projekt\Symulator\Kod\Debug\Symulator.exe
