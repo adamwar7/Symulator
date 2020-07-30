@@ -10,7 +10,7 @@ void zaladujNazwyPlikowDoListy(nazwyPlikow** pHead, char* buf)
 {
 	nazwyPlikow* current = malloc(sizeof(nazwyPlikow));
 	current->tab = buf;
-	current->next = (*pHead);
+	current->next = (*pHead);     //zapis do jednokierunkowej
 	*pHead = current;
 }
 
@@ -39,7 +39,7 @@ void zaladujRezerwowych(zawodnicy** rynekHead, char* i, int a, int b) {
 	zawodnicy* nowy = malloc(sizeof(zawodnicy));
 	nowy->nazwisko = i;
 	nowy->moc = a;
-	nowy->wartosc = b;
+	nowy->wartosc = b;       //zapis do jednokierunkowej
 	nowy->pNext = (*rynekHead);
 	*rynekHead = nowy;
 }
@@ -64,12 +64,12 @@ void pobierzRynek(zawodnicy** rynekHead) {
 void pobierzKluby(kluby** glowa, nazwyPlikow* pHead) {
 	if (pHead) {
 		FILE* plik;
-		if ((plik = fopen(pHead->tab, "r")) != NULL) {
+		if ((plik = fopen(pHead->tab, "r")) != NULL) {   //do odczytu
 			if (plik) {
-				kluby* nowy = malloc(sizeof(kluby));
+				kluby* nowy = malloc(sizeof(kluby));   //alokacja
 				int size = 10;
-				char* nazwa = malloc(10 * sizeof(size));
-				char* trener = malloc(10 * sizeof(size));
+				char* nazwa = malloc(10 * sizeof(size));  //alokacja
+				char* trener = malloc(10 * sizeof(size)); //alokacja
 				int budzet = 0;
 				if (fscanf(plik, "%s", nazwa));
 				if (fscanf(plik, "%s", trener));
@@ -84,8 +84,8 @@ void pobierzKluby(kluby** glowa, nazwyPlikow* pHead) {
 				nowy->iloscMeczy = 0;
 				zawodnicy* zawHead = NULL;
 				for (int i = 0; i < 18; i++) {
-					zawodnicy* tmp = malloc(sizeof(zawodnicy));
-					char* i = malloc(10 * sizeof(i));
+					zawodnicy* tmp = malloc(sizeof(zawodnicy));   //alokacja
+					char* i = malloc(10 * sizeof(i)); //alokacja
 					int moc = 0;
 					int wartosc = 0;
 					if (!feof(plik)) {
@@ -99,7 +99,7 @@ void pobierzKluby(kluby** glowa, nazwyPlikow* pHead) {
 						zawHead = tmp;
 					}
 				}
-				nowy->zawHead = zawHead;
+				nowy->zawHead = zawHead;   //zapis do cyklicznej
 				if (*glowa == NULL) {
 					*glowa = nowy;
 

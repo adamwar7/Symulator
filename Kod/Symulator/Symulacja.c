@@ -13,14 +13,15 @@
 void aktualizuj(twojZespol* twojHead, kluby* glowa) {
 	twojHead->nazwa = glowa->nazwa;
 	twojHead->trener = glowa->trener;
-	twojHead->budzet = glowa->budzet;
+	twojHead->budzet = glowa->budzet;       //nadpisanie danych o zepole
 	twojHead->pkt = glowa->pkt;
-	twojHead->goleZ = glowa->goleZ;
+	twojHead->goleZ = glowa->goleZ;   
 	twojHead->goleS = glowa->goleS;
 	twojHead->bilans = glowa->bilans;
 	twojHead->iloscMeczy = glowa->iloscMeczy;
 }
 void aktualizujZespol(twojZespol* twojHead, kluby* glowa) {
+	//znalezienie zespolu do aktualizacji
 	kluby* tmp = glowa;
 	while (TRUE) {
 		if (glowa) {
@@ -42,6 +43,8 @@ void aktualizujZespol(twojZespol* twojHead, kluby* glowa) {
 		return;
 	}
 }
+
+//zliczenie sumy pkt zawodnkow
 int sumujMoce(zawodnicy* zawHead) {
 	int suma = 0;
 	while (zawHead) {
@@ -51,6 +54,8 @@ int sumujMoce(zawodnicy* zawHead) {
 	return suma;
 }
 
+
+//przyporzadkowanie bramek
 int losujGole(int min, int max)
 {
 	int tmp;
@@ -65,6 +70,7 @@ int losujGole(int min, int max)
 	return max ? (rand() % max + min) : min;
 }
 
+//symulacja pojedynczego meczu
 void symulujMecz(kluby* glowa, kluby* drugaGlowa) {
 	int a = sumujMoce(glowa->zawHead);
 	int b = sumujMoce(drugaGlowa->zawHead);
@@ -160,7 +166,7 @@ void symulujMecz(kluby* glowa, kluby* drugaGlowa) {
 	printf(" %2d  %12s\n", goleB, drugaGlowa->nazwa);
 }
 
-
+//symulacja kolejki
 void symulujKolejke(kluby* glowa, int stanSezonu) {
 	system("cls");
 	kluby* current = glowa;
@@ -181,6 +187,8 @@ void symulujKolejke(kluby* glowa, int stanSezonu) {
 	}
 }
 
+
+//symulacja calego sezonu
 void symulujSezon(kluby* glowa, kluby* end, int stanSezonu) {
 	int roundWorks = stanSezonu;
 	roundWorks++;
@@ -195,6 +203,7 @@ void symulujSezon(kluby* glowa, kluby* end, int stanSezonu) {
 	}
 }
 
+//zakonczenie sezonu
 void sSezonu(int stanSezonu, zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa) {
 	system("cls");
 	printf("The season is over, progress in league is being reset\n-----------------------------------------------------\n");

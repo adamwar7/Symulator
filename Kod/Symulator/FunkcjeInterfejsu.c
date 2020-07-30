@@ -352,6 +352,10 @@ void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezon
 					break;
 
 				}
+				else {
+					nieudanyZakup(rynekHead, twojHead, glowa, stanSezonu);
+					break;
+				}
 			}
 			else {
 				while (tmp->pNext != NULL) {
@@ -374,6 +378,10 @@ void kup(zawodnicy* rynekHead, twojZespol* twojHead, kluby* glowa, int stanSezon
 								p->pNext = temp->pNext;
 							tym->zawHead->pNext->pNext = NULL;
 							udanyZakup(rynekHead, twojHead, glowa, stanSezonu);
+							break;
+						}
+						else {
+							nieudanyZakup(rynekHead, twojHead, glowa, stanSezonu);
 							break;
 						}
 					}
